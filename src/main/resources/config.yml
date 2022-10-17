@@ -1,0 +1,40 @@
+# PackManagerPro provides a better way to manage server resource packs.
+# Find a guide on hosting a resource pack on the plugin's Spigot page.
+
+# Activate a server resource pack? (Basically toggle the plugin).
+enable-pack: true
+
+# How do you want the plugin to work?
+# global = One resource pack across the entire server.
+# per-world = Specific resource packs per-world.
+application-type: global
+
+# Settings for global application type.
+# Obsolete if application-type is set to per-world.
+global-application:
+  # If you're using dropbox, don't forget to set dl=1 at the end of the url.
+  pack-url: ''
+  # Force players to download the resource pack? If they deny, they will be disconnected from the server.
+  force-pack: false
+  # Optional additional prompt message. (Sent alongside the default prompt).
+  prompt-message: ""
+
+# Settings for per-world application type.
+# Obsolete if application-type is set to global.
+per-world-application:
+  # List of worlds. Copy and paste as you please.
+  # Worlds not listed here will not have a server resource pack.
+  world:
+    pack-url: ''
+    force-pack: false
+    prompt-message: ""
+  example_world:
+    pack-url: ''
+    force-pack: false
+    prompt-message: ""
+
+# Messages
+messages:
+  prefix: "&8[&2&lPackManagerPro&8] &r"
+  reload: "&7PackManagerPro has been reloaded."
+  no-permission: "&cYou do not have permission!"

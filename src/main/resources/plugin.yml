@@ -1,0 +1,9 @@
+name: PackManagerPro
+version: '${project.version}'
+main: me.naspo.packmanagerpro.PackManagerPro
+api-version: 1.19
+author: Naspo
+description: A better way to manage server resource packs.
+
+commands:
+  pmp:
