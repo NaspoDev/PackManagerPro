@@ -6,7 +6,7 @@
 
     <groupId>me.naspo</groupId>
     <artifactId>PackManagerPro</artifactId>
-    <version>1.2.1</version>
+    <version>1.2.2</version>
     <packaging>jar</packaging>
 
     <name>PackManagerPro</name>
@@ -39,7 +39,6 @@
                         </goals>
                         <configuration>
                             <createDependencyReducedPom>false</createDependencyReducedPom>
-                            <outputFile>C:\Users\atsub\IdeaProjects\MC_Plugins\PackManagerPro\jar\PackManagerPro-${project.version}.jar</outputFile>
                         </configuration>
                     </execution>
                 </executions>
@@ -68,7 +67,7 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.20.1-R0.1-SNAPSHOT</version>
+            <version>1.21.5-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
