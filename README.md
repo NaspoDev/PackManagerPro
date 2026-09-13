@@ -14,7 +14,7 @@ Alternatively, you can also download Tether from its [releases on GitHub](https:
 [<img src="https://i.imgur.com/E76tnrm.png" width="180" alt="Available for Paper">](https://papermc.io/)
 [<img src="https://i.imgur.com/HkbCj5L.png" width="180" alt="Available for Purpur">](https://purpurmc.org/)
 
-Versions before 1.3.0 also support plain [Spigot](https://www.spigotmc.org/) servers.
+Versions before 2.0.0 also support plain [Spigot](https://www.spigotmc.org/) servers.
 
 # Features
 - Manage server resource pack and it's settings without needing to touch the server.properties.
