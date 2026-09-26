@@ -1,0 +1,9 @@
+name: PackManagerPro
+description: $description
+version: '${version}'
+
+main: dev.naspo.packManagerPro.PackManagerPro
+api-version: '26.3'
+load: POSTWORLD
+
+authors: [ Naspo ]
