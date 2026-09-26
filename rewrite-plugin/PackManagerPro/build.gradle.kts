@@ -18,6 +18,16 @@ kotlin {
 }
 
 tasks {
+    jar {
+        // Disabling the jar task as we only want the fat jar output from the shadowJar task.
+        enabled = false
+    }
+
+    shadowJar {
+        // Removing the "-all" suffix from the end of the build output.
+        archiveClassifier.set("")
+    }
+
     build {
         dependsOn(shadowJar)
     }
