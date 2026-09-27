@@ -1,5 +1,7 @@
 package dev.naspo.packmanagerpro
 
+import dev.naspo.packmanagerpro.commands.Commands
+import dev.naspo.packmanagerpro.commands.TabCompleter
 import dev.naspo.packmanagerpro.listeners.PlayerChangedWorldListener
 import dev.naspo.packmanagerpro.listeners.PlayerJoinListener
 import org.bukkit.plugin.java.JavaPlugin
@@ -13,15 +15,12 @@ class PackManagerPro : JavaPlugin() {
 
         this.logger.info("PackManagerPro has been enabled!")
 
-
+        registerEvents()
+        registerCommands()
     }
 
     override fun onDisable() {
         this.logger.info("PackManagerPro has been disabled.")
-    }
-
-    private fun instantiateClasses() {
-
     }
 
     private fun registerEvents() {
@@ -30,6 +29,7 @@ class PackManagerPro : JavaPlugin() {
     }
 
     private fun registerCommands() {
-
+        this.getCommand("pmp")?.setExecutor(Commands(this))
+        this.getCommand("pmp")?.tabCompleter = TabCompleter()
     }
 }
