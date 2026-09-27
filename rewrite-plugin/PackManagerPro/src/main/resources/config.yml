@@ -42,6 +42,6 @@ per-world-application:
 
 # Messages
 messages:
-  prefix: "&8[&2PackManagerPro&8] &r"
-  reload: "&7PackManagerPro has been reloaded."
-  no-permission: "&cYou do not have permission!"
+  prefix: "<dark_gray>[&2PackManagerPro<dark_gray>] <reset>"
+  reload: "<gray>PackManagerPro has been reloaded."
+  no-permission: "<red>You do not have permission!"
