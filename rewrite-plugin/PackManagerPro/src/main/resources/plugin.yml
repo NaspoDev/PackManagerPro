@@ -7,3 +7,6 @@ api-version: '26.2'
 load: POSTWORLD
 
 authors: [ Naspo ]
+
+commands:
+  pmp:
