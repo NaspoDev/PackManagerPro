@@ -1,0 +1,47 @@
+# PackManagerPro provides a better way to manage server resource packs.
+
+# Activate a server resource pack? (Basically toggle the plugin).
+enable-pack: true
+
+# How do you want the plugin to work?
+# global = One resource pack across the entire server.
+# per-world = Specific resource packs per-world.
+application-type: global
+
+# Settings for global application type.
+# Irrelevant if the application-type is set to per-world.
+global-application:
+  # The direct download link to the resource pack.
+  # If you want to set up your own direct download link to a resource pack, see PackManagerPro's webpage for a guide.
+  pack-url: ''
+  # Force players to download the resource pack? If they deny, they will be disconnected from the server.
+  force-pack: false
+  # Optional additional prompt message. (Sent alongside the default prompt).
+  prompt-message: ""
+
+# Settings for per-world application type.
+# Irrelevant if application-type is set to global.
+per-world-application:
+  # List of worlds. (Copy and paste as you wish).
+  # Worlds not listed here will not have a server resource pack.
+
+  # The actual name of the world should be the heading of its section. Example: world, world_nether, my_custom_world.
+  world:
+    # The direct download link to the resource pack.
+    # If you want to set up your own direct download link to a resource pack, see PackManagerPro's webpage for a guide.
+    pack-url: ''
+    # Force players to download the resource pack? If they deny, they will be disconnected from the server.
+    force-pack: false
+    # Optional additional prompt message. (Sent alongside the default prompt).
+    prompt-message: ""
+
+  example_world:
+    pack-url: ''
+    force-pack: false
+    prompt-message: ""
+
+# Messages
+messages:
+  prefix: "&8[&2PackManagerPro&8] &r"
+  reload: "&7PackManagerPro has been reloaded."
+  no-permission: "&cYou do not have permission!"
