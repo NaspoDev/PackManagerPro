@@ -14,7 +14,7 @@ class PlayerJoinListener(val plugin: PackManagerPro) : Listener {
         val player: Player = event.player
 
         // If enable-pack is true, send the player a resource pack.
-        if (!plugin.config.getBoolean("enable-pack")) {
+        if (plugin.config.getBoolean("enable-pack")) {
             sendResourcePack(player, plugin)
         } else {
             // TODO: test without this. i.e. test if players automatically keep the resource pack on after leaving and re-joining
