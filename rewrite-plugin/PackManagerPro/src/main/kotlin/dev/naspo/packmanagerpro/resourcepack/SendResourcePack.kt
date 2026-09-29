@@ -1,10 +1,9 @@
-package dev.naspo.packmanagerpro.sendresourcepack
+package dev.naspo.packmanagerpro.resourcepack
 
 import dev.naspo.packmanagerpro.PackManagerPro
 import net.kyori.adventure.resource.ResourcePackInfo
 import net.kyori.adventure.resource.ResourcePackRequest
 import net.kyori.adventure.text.Component
-import org.bukkit.configuration.ConfigurationSection
 import org.bukkit.configuration.file.FileConfiguration
 import org.bukkit.entity.Player
 import java.net.URI

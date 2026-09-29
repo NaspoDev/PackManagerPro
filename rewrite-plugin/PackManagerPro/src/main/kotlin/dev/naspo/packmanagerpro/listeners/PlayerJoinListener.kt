@@ -1,7 +1,7 @@
 package dev.naspo.packmanagerpro.listeners
 
 import dev.naspo.packmanagerpro.PackManagerPro
-import dev.naspo.packmanagerpro.sendresourcepack.sendResourcePack
+import dev.naspo.packmanagerpro.resourcepack.sendResourcePack
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
