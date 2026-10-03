@@ -27,8 +27,7 @@ class ResourcePackRequestCache(val plugin: PackManagerPro) {
     var global: ResourcePackRequest? = null
         private set
 
-    // Private backing field for 'worlds'.
-    // It's a ConcurrentHashMap as this is modified from another thread.
+    // Backing field is a ConcurrentHashMap as this is modified from another thread.
     // (Specifically in ResourcePackInfo.computeHashAndBuild()'s CompletableFuture. See this done below).
     /** The cached ResourcePackRequests for the world-specific resource packs. */
     val worlds: Map<String, ResourcePackRequest>
