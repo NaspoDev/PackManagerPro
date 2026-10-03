@@ -29,7 +29,7 @@ class ResourcePackRequestCache(val plugin: PackManagerPro) {
 
     // Backing field is a ConcurrentHashMap as this is modified from another thread.
     // (Specifically in ResourcePackInfo.computeHashAndBuild()'s CompletableFuture. See this done below).
-    /** The cached ResourcePackRequests for the world-specific resource packs. */
+    /** The cached ResourcePackRequests for the world-specific resource packs. (World names converted to lowercase). */
     val worlds: Map<String, ResourcePackRequest>
         field: ConcurrentHashMap<String, ResourcePackRequest> = ConcurrentHashMap()
 
@@ -37,7 +37,11 @@ class ResourcePackRequestCache(val plugin: PackManagerPro) {
     // The fallback resource pack download prompt to use if one isn't set in the config.
     private val fallbackPrompt: String = "Please download the resource pack."
 
+    /**
+     * Refresh the global and per-world cache.
+     */
     fun refreshCache() {
+        plugin.logger.info("Refreshing ResourcePackRequest cache.")
         refreshGlobalCache()
         refreshWorldsCache()
     }
@@ -167,7 +171,7 @@ class ResourcePackRequestCache(val plugin: PackManagerPro) {
      */
     private fun cache(request: ResourcePackRequest, worldName: String? = null) {
         if (worldName != null) {
-            worlds[worldName] = request
+            worlds[worldName.lowercase()] = request
         } else {
             global = request
         }
