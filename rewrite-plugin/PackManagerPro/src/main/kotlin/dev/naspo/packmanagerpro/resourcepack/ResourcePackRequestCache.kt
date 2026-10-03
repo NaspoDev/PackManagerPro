@@ -19,7 +19,7 @@ import java.util.logging.Level
  *
  * The cache is refreshed upon server startup and every config reload.
  */
-class ResourcePackRequestCache(val plugin: PackManagerPro) {
+class ResourcePackRequestCache(private val plugin: PackManagerPro) {
     // Volatile as this variable is set from another thread.
     // (Specifically in ResourcePackInfo.computeHashAndBuild()'s CompletableFuture. See this done below).
     /** The cached ResourcePackRequest for the global resource pack. */

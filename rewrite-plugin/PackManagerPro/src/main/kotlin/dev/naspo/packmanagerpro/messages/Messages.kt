@@ -25,7 +25,6 @@ fun sendPlayerMessage(player: Player, message: String) {
 fun sendPlayerPrefixedMessage(
     player: Player,
     message: String,
-    // TODO: Update this to use ConfigAccessor instead of a raw config instance once I implement that here.
     config: FileConfiguration
 ) {
     player.sendMessage(mm.deserialize(config.getString("messages.prefix") + message))
