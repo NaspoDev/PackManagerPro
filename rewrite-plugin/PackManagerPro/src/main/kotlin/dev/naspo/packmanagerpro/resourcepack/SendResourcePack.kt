@@ -1,6 +1,7 @@
 package dev.naspo.packmanagerpro.resourcepack
 
 import dev.naspo.packmanagerpro.PackManagerPro
+import dev.naspo.packmanagerpro.applicationtype.ApplicationType
 import net.kyori.adventure.resource.ResourcePackInfo
 import net.kyori.adventure.resource.ResourcePackRequest
 import net.kyori.adventure.text.Component
@@ -16,18 +17,17 @@ import java.util.logging.Level
  * @param player - The player to send the resource pack to.
  * @param plugin - Instance of the plugin.
  */
-fun sendResourcePack(player: Player, plugin: PackManagerPro) {
+fun sendResourcePack(player: Player, resourcePackRequestCache: ResourcePackRequestCache, plugin: PackManagerPro) {
     // Get the appropriate ResourcePackRequest based on the application type.
-    val applicationType: String? = plugin.config.getString("application-type")
+    val applicationType: ApplicationType? = applicationType(plugin)
+    if (applicationType == null) {
+        plugin.logger.log(Level.SEVERE, "Cannot send resource pack! 'application-type' is not valid.")
+        return
+    }
 
-    val resourcePackRequest: ResourcePackRequest? = when (applicationType?.lowercase()) {
-        "global" -> globalResourcePackRequest(plugin.config)
-        "per-world" -> worldSpecificResourcePackRequest(plugin, player)
-        else -> {
-            plugin.logger.log(Level.SEVERE, "Cannot send resource pack!")
-            plugin.logger.log(Level.SEVERE, "'enable-pack' is true but 'application-type' is not valid.")
-            return
-        }
+    val resourcePackRequest: ResourcePackRequest? = when (applicationType) {
+        ApplicationType.GLOBAL -> resourcePackRequestCache.global
+        ApplicationType.PER_WORLD -> resourcePackRequestCache.worlds[player.location.world.name.lowercase()]
     }
 
     // A null ResourcePackRequest at this stage will trigger clearing of server resource packs for the player.
@@ -37,58 +37,19 @@ fun sendResourcePack(player: Player, plugin: PackManagerPro) {
     if (resourcePackRequest == null) {
         player.clearResourcePacks()
         return
+    } else {
+        // Send the resource pack to the player.
+        player.sendResourcePacks(resourcePackRequest)
     }
-
-    // Send the resource pack to the player.
-    player.sendResourcePacks(resourcePackRequest)
 }
 
-/**
- * Builds and returns a [ResourcePackRequest] based on the global resource pack.
- */
-private fun globalResourcePackRequest(config: FileConfiguration): ResourcePackRequest? {
-    // Build ResourcePackInfo
-    val packUrl: String = config.getString("global-application.pack-url") ?: return null
-    val packInfo = ResourcePackInfo.resourcePackInfo()
-        .uri(URI.create(packUrl))
-        .build()
-
-    // Build ResourcePackRequest
-    val required: Boolean = config.getBoolean("global-application.force-pack")
-    val prompt: String = config.getString("global-application.prompt-message") ?: "Please download the resource pack."
-    return ResourcePackRequest.resourcePackRequest()
-        .packs(packInfo)
-        .required(required)
-        .prompt(Component.text(prompt))
-        .build()
-}
+// -- Private Helpers --
 
 /**
- * Builds and returns a [ResourcePackRequest] based on the world-specific resource pack for
- * the world of the provided player.
+ * Reads, parses, and returns the application type from the config as a type-safe [ApplicationType].
+ * @return The parsed, valid application type. Or null if it's invalid.
  */
-private fun worldSpecificResourcePackRequest(plugin: PackManagerPro, player: Player): ResourcePackRequest? {
-    // In the "per-world-application" config section, get the key for the world that matches the
-    // one that the player is currently in.
-    val worldKey: String? = plugin.config.getConfigurationSection("per-world-application")
-        ?.getKeys(false)
-        ?.firstOrNull { player.location.world.name == it }
-
-    if (worldKey == null) return null
-
-    val packUrl: String = plugin.config.getString("per-world-application.$worldKey.pack-url") ?: return null
-    val packInfo = ResourcePackInfo.resourcePackInfo()
-        .uri(URI.create(packUrl))
-        .build()
-
-    // Build ResourcePackRequest
-    val required: Boolean = plugin.config.getBoolean("per-world-application.$worldKey.force-pack")
-    val prompt: String = plugin.config.getString("per-world-application.$worldKey.prompt-message")
-        ?: "Please download the resource pack."
-
-    return ResourcePackRequest.resourcePackRequest()
-        .packs(packInfo)
-        .required(required)
-        .prompt(Component.text(prompt))
-        .build()
+private fun applicationType(plugin: PackManagerPro): ApplicationType? {
+    val applicationType: String = plugin.config.getString("application-type") ?: return null
+    return ApplicationType.fromString(applicationType)
 }

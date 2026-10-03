@@ -3,12 +3,16 @@ package dev.naspo.packmanagerpro.commands
 import dev.naspo.packmanagerpro.PackManagerPro
 import dev.naspo.packmanagerpro.messages.sendPlayerMessage
 import dev.naspo.packmanagerpro.messages.sendPlayerPrefixedMessage
+import dev.naspo.packmanagerpro.resourcepack.ResourcePackRequestCache
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 
-class Commands(val plugin: PackManagerPro) : CommandExecutor {
+class Commands(
+    val plugin: PackManagerPro,
+    val resourcePackRequestCache: ResourcePackRequestCache
+) : CommandExecutor {
 
     val didYouMeanReloadMessageFormatted = "<gray>Did you mean <gold>/pmp reload<gray>?"
     val didYouMeanReloadMessagePlain = "Did you mean /pmp reload?"
@@ -36,7 +40,7 @@ class Commands(val plugin: PackManagerPro) : CommandExecutor {
 
             // Reload command
             if (args[0].lowercase() == "reload") {
-                plugin.reloadConfig()
+                reloadConfig(plugin, resourcePackRequestCache)
                 sendPlayerPrefixedMessage(
                     sender,
                     plugin.config.getString("messages.reload") ?: "<gray>PackManagerPro has been reloaded.",
@@ -55,7 +59,7 @@ class Commands(val plugin: PackManagerPro) : CommandExecutor {
                 return false
             } else if (args[0].lowercase() == "reload") {
                 // Reload command
-                plugin.reloadConfig()
+                reloadConfig(plugin, resourcePackRequestCache)
                 sender.sendMessage("PackManagerPro has been reloaded.")
                 return true
             } else {
@@ -64,5 +68,14 @@ class Commands(val plugin: PackManagerPro) : CommandExecutor {
             }
         }
         return false
+    }
+
+    // -- Private Helpers --
+
+    // Reloads the config along with anything else needed to be done upon reload,
+    // like refreshing the ResourcePackRequest cache.
+    private fun reloadConfig(plugin: PackManagerPro, resourcePackRequestCache: ResourcePackRequestCache) {
+        plugin.reloadConfig()
+        resourcePackRequestCache.refreshCache()
     }
 }
