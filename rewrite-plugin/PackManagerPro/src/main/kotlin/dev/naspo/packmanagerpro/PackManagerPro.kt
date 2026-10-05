@@ -34,7 +34,7 @@ class PackManagerPro : JavaPlugin() {
 
     private fun registerEvents() {
         this.server.pluginManager.registerEvents(PlayerJoinListener(this, resourcePackRequestCache), this)
-        this.server.pluginManager.registerEvents(PlayerChangedWorldListener(this), this)
+        this.server.pluginManager.registerEvents(PlayerChangedWorldListener(this, resourcePackRequestCache), this)
     }
 
     private fun registerCommands() {
