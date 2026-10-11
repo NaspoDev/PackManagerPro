@@ -33,10 +33,6 @@ class ResourcePackRequestCache(private val plugin: PackManagerPro) {
     val worlds: Map<String, ResourcePackRequest>
         field: ConcurrentHashMap<String, ResourcePackRequest> = ConcurrentHashMap()
 
-    // TODO: is this even needed? What happens if I dont set a fallback prompt/prompt at all?
-    // The fallback resource pack download prompt to use if one isn't set in the config.
-    private val fallbackPrompt: String = "Please download the resource pack."
-
     /**
      * Refresh the global and per-world cache.
      */
@@ -166,7 +162,7 @@ class ResourcePackRequestCache(private val plugin: PackManagerPro) {
                 ResourcePackRequest.resourcePackRequest()
                     .packs(packInfo)
                     .required(required)
-                    .prompt(Component.text(prompt ?: fallbackPrompt))
+                    .prompt(prompt?.let {Component.text(it)})
                     .build()
             }
     }
