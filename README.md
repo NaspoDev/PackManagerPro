@@ -40,5 +40,5 @@ If you need to create your own direct download link, this guide will show you ho
 6. Change "dl=0" to "dl=1" at the end of the link. (This is what makes it a direct download link. It will not work without this).
 7. Reload the plugin and you're done!
 
-## Plugin Demo
+# Plugin Demo
 See PMP in action [here](https://imgur.com/a/packmanagerpro-plugin-demo-yomPYQ2)!
