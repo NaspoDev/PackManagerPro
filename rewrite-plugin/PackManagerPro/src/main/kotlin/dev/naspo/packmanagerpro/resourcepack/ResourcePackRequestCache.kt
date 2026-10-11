@@ -49,7 +49,7 @@ class ResourcePackRequestCache(private val plugin: PackManagerPro) {
     private fun refreshGlobalCache() {
         val packUrl: String? = plugin.config.getString("global-application.pack-url")
 
-        if (packUrl == null) {
+        if (packUrl.isNullOrEmpty()) {
             // Clear the global pack cache.
             global = null
             return
@@ -58,6 +58,7 @@ class ResourcePackRequestCache(private val plugin: PackManagerPro) {
         // Extract more pack info.
         val required: Boolean = plugin.config.getBoolean("global-application.force-pack")
         val prompt: String? = plugin.config.getString("global-application.prompt-message")
+            ?.takeIf { it.isNotEmpty() }
 
         buildRequest(packUrl, required, prompt)
             .thenAccept { cache(it) }
@@ -97,7 +98,7 @@ class ResourcePackRequestCache(private val plugin: PackManagerPro) {
         for (world in worldKeys) {
             val packUrl: String? = plugin.config.getString("per-world-application.$world.pack-url")
 
-            if (packUrl == null) {
+            if (packUrl.isNullOrEmpty()) {
                 worlds.remove(world)
                 continue
             }
@@ -105,6 +106,7 @@ class ResourcePackRequestCache(private val plugin: PackManagerPro) {
             // Extract more pack info.
             val required: Boolean = plugin.config.getBoolean("per-world-application.$world.force-pack")
             val prompt: String? = plugin.config.getString("per-world-application.$world.prompt-message")
+                ?.takeIf { it.isNotEmpty() }
 
             buildRequest(packUrl, required, prompt, world)
                 .thenAccept { cache(it, world) }
@@ -134,7 +136,12 @@ class ResourcePackRequestCache(private val plugin: PackManagerPro) {
     ): CompletableFuture<ResourcePackRequest> {
         // URL parsing
         val uri: URI = try {
-            URI.create(url)
+            URI.create(url).also {
+                // Making sure the url has a scheme (ex. https://).
+                // An absolute URI specifies a scheme. Without a scheme, a URI is treated as relative, so
+                // almost anything will pass as a valid URI, like "../../", or even an empty string for some reason.
+                require(it.isAbsolute) { "URL must contain a scheme (ex. https://)." }
+            }
         } catch (e: IllegalArgumentException) {
             val errorMessage = if (worldName != null) {
                 "Failed to parse resource pack URL for world $worldName. Is its formatting valid?"
