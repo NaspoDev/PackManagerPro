@@ -8,7 +8,7 @@ No need to edit the server.properties file or even restart the server. It also s
 [<img src="https://i.imgur.com/SgO3sQT.png" width="180" alt="Available on Modrinth">](https://modrinth.com/plugin/packmanagerpro)
 [<img src="https://i.imgur.com/r1ZIvDN.png" width="180" alt="Available on Hangar">](https://hangar.papermc.io/Naspo/PackManagerPro)
 
-Alternatively, you can also download Tether from its [releases on GitHub](https://github.com/NaspoDev/PackManagerPro/releases).
+Alternatively, you can also download PackManagerPro from its [releases on GitHub](https://github.com/NaspoDev/PackManagerPro/releases).
 
 ## Compatability
 [<img src="https://i.imgur.com/E76tnrm.png" width="180" alt="Available for Paper">](https://papermc.io/)
@@ -17,7 +17,7 @@ Alternatively, you can also download Tether from its [releases on GitHub](https:
 Versions before 2.0.0 also support plain [Spigot](https://www.spigotmc.org/) servers.
 
 # Features
-- Manage server resource pack and it's settings without needing to touch the server.properties.
+- Manage server resource pack and it's settings without needing to touch the server.properties file.
 - No need to restart the server to implement changes, just reload the plugin.
 - Set per-world resource packs.
 - Toggle the server resource pack(s) at any time.
